@@ -13,9 +13,10 @@ export function getWelcome(): Promise<Welcome> {
 }
 // ***   ***   ***
 
+
 //  GET /gpt/chat/:text
 export function sendMessage(): Promise<RequestChatCompletion> {
   return request
-    .get(`${serverURL}/gpt/chat`)
+    .get(`${serverURL}/gpt`)
     .then((response) => response.body.reply)
 }

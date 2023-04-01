@@ -1,16 +1,14 @@
-export interface RequestCompletion {
-  model: string
-  prompt: string
-  max_tokens: number
-  temperature: number
-}
-
 export interface RequestChatCompletion {
   model: string
-  messages: Message[]
+  messages: string
 }
 
-export interface Message {
+export interface CreateChatCompletionRequest {
+  model: string
+  messages: ChatCompletionRequestMessage[]
+}
+
+export interface ChatCompletionRequestMessage {
   role: string
   content: string
 }
