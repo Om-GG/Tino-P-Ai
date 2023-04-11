@@ -33,14 +33,11 @@ const chain = new ConversationChain({
   llm: chat,
 })
 
-const chatAsync = async (message: string) => {
+async function chatAsync(message: string) {
   const response = await chain.call({
     input: `${message}`,
   })
-
   return response
 }
 
-// console.log(chatAsync('Hi I am david'))
-// console.log(chatAsync('What is my name?'))
 export default chatAsync

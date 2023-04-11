@@ -1,10 +1,12 @@
-
 import Chat from './Chat'
 
 function App() {
   return (
-    <>
-      <div className="columns">
+    <div
+      className="is-flex is-flex-direction-column"
+      style={{ minHeight: '100vh' }}
+    >
+      <div className="columns" style={{ flexGrow: 1 }}>
         <div className="column pb-6"></div>
         <div className="column is-half">
           <h1 className="has-text-centered is-size-2 mt-4">Tino P-Ai</h1>
@@ -24,7 +26,7 @@ function App() {
           </div>
         </footer>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 import express from 'express'
 
-import chatAsync from './configChat'
+import chatAsync from './chatBotConfig'
 
 const router = express.Router()
 

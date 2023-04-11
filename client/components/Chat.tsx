@@ -6,24 +6,24 @@ export default function Chat() {
   const [message, setMessage] = useState<string>('')
   const [error, setError] = useState('')
 
-  // Create a ref for the messages container div
   const messagesEndRef = useRef<null | HTMLDivElement>(null)
 
-  // Scroll to bottom function
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight
     }
   }
 
-  // Call scrollToBottom whenever previousMessages changes
   useEffect(scrollToBottom, [previousMessages])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    setPreviousMessages([...previousMessages, message])
+
     sendMessage(message)
       .then((data) => {
-        setPreviousMessages([...previousMessages, message, data])
+        setPreviousMessages((prevMessages) => [...prevMessages, data])
       })
       .catch((err) => {
         console.log(err)
@@ -40,10 +40,10 @@ export default function Chat() {
     <div>
       <form onSubmit={handleSubmit}>
         <div
-          ref={messagesEndRef} // Add the ref to the messages container div
+          ref={messagesEndRef}
           className="messages-container"
           style={{
-            maxHeight: '300px',
+            height: 'calc(100vh - 250px)', // Change the maxHeight property here
             overflowY: 'scroll',
             border: '1px solid red',
             padding: '1rem',
