@@ -1,43 +1,30 @@
-import { useState } from 'react'
-
-// fetch, superagent, axios
+import { useState, useRef, useEffect } from 'react'
+import { sendMessage } from '../apiClient'
 
 export default function Chat() {
-  // { text: string, author: 'me' | 'gpt', id: number, timestamp: number }
-
-  const [previousMessages, setPreviousMessages] = useState<
-    { content: string; role: string }[]
-  >([])
-  const [message, setMessage] = useState('')
-  const [response, setResponse] = useState('')
+  const [previousMessages, setPreviousMessages] = useState<string[]>([])
+  const [message, setMessage] = useState<string>('')
   const [error, setError] = useState('')
+
+  // Create a ref for the messages container div
+  const messagesEndRef = useRef<null | HTMLDivElement>(null)
+
+  // Scroll to bottom function
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight
+    }
+  }
+
+  // Call scrollToBottom whenever previousMessages changes
+  useEffect(scrollToBottom, [previousMessages])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    setPreviousMessages([
-      ...previousMessages,
-      { content: message, role: 'user' },
-    ])
-    fetch('http://localhost:3000/api/v1/gpt', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        messages: [...previousMessages, { content: message, role: 'user' }],
-      }),
-    })
-      .then((res) => res.json())
+    sendMessage(message)
       .then((data) => {
-        setPreviousMessages([
-          ...previousMessages,
-          { content: message, role: 'user' },
-          { content: data.completion.content, role: 'assistant' },
-        ])
-        setResponse(data.completion.content)
+        setPreviousMessages([...previousMessages, message, data])
       })
-      // .finally(() => setMessage(''))
       .catch((err) => {
         console.log(err)
         setError('Something went wrong, come back soon!')
@@ -48,21 +35,29 @@ export default function Chat() {
   if (error) {
     return <div>{error}</div>
   }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <textarea
-          className="textarea is-danger is-medium"
-          value={previousMessages.map((elem) => `${elem.content}\n\n`)}
-          // {previousMessages.map((msg, idx) => (
-          //   <div key={idx} className={`message message--${msg.role}`}>
-          //     <div className="message__text">{msg.content}</div>
-          //   </div>
-          // ))}
-          placeholder=""
-          rows={12}
-          onChange={(e) => setMessage(e.target.value)}
-        ></textarea>
+        <div
+          ref={messagesEndRef} // Add the ref to the messages container div
+          className="messages-container"
+          style={{
+            maxHeight: '300px',
+            overflowY: 'scroll',
+            border: '1px solid red',
+            padding: '1rem',
+            borderRadius: '5px',
+          }}
+        >
+          {previousMessages.map((elem, idx) => (
+            <div key={idx}>
+              {elem}
+              <br />
+              <br />
+            </div>
+          ))}
+        </div>
         <input
           className="input is-danger is-medium"
           type="text"
@@ -71,7 +66,7 @@ export default function Chat() {
           onChange={(e) => setMessage(e.target.value)}
         ></input>
         <div className="">
-          <button className="button is-fullwidth is-danger mt-2" type="submit">
+          <button className="button is-fullwidth is-black mt-2" type="submit">
             Submit
           </button>
         </div>

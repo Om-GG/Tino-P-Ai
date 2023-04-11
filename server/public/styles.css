@@ -1,17 +1,20 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
 
 * {
-  background-color: #F8C8DC;
+  background-color: #df3b1e;
   margin: 0;
   padding: 0px;
+  color: antiquewhite;
   font-family: 'Roboto Mono', monospace;
 }
 
 h1 {
+  color: antiquewhite;
   font-family: 'Delicious Handrawn', cursive;
 }
 
 h2 {
+  color: antiquewhite;
   font-family: 'Delicious Handrawn', cursive;
 }
 
