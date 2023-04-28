@@ -19,3 +19,17 @@ h2 {
   font-family: 'Delicious Handrawn', cursive;
 }
 
+.messagesContainer {
+  height: calc(100vh - 250px);
+  overflow-y: scroll;
+  border: 1px solid red;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #b72f17ae;
+}
+.message {
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #df3b1e;
+  margin-bottom: 1rem;
+}

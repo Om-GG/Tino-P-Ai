@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { sendMessage } from '../apiClient'
 
 export default function Chat() {
@@ -14,23 +14,25 @@ export default function Chat() {
     }
   }
 
-  useEffect(scrollToBottom, [previousMessages])
+  useEffect(scrollToBottom, [previousMessages, scrollToBottom])
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
 
-    setPreviousMessages([...previousMessages, message])
+      setPreviousMessages([...previousMessages, message])
 
-    sendMessage(message)
-      .then((data) => {
+      try {
+        const data = await sendMessage(message)
         setPreviousMessages((prevMessages) => [...prevMessages, data])
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err)
         setError('Something went wrong, come back soon!')
-      })
-    setMessage('')
-  }
+      }
+      setMessage('')
+    },
+    [previousMessages, message]
+  )
 
   if (error) {
     return <div>{error}</div>
@@ -39,19 +41,9 @@ export default function Chat() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div
-          ref={messagesEndRef}
-          className="messages-container"
-          style={{
-            height: 'calc(100vh - 250px)', // Change the maxHeight property here
-            overflowY: 'scroll',
-            border: '1px solid red',
-            padding: '1rem',
-            borderRadius: '5px',
-          }}
-        >
+        <div ref={messagesEndRef} className="messagesContainer">
           {previousMessages.map((elem, idx) => (
-            <div key={idx}>
+            <div className='message' key={idx}>
               {elem}
               <br />
               <br />
