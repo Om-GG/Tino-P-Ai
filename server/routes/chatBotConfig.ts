@@ -1,10 +1,11 @@
-import { ChatOpenAI } from 'langchain/chat_models'
+import { ChatOpenAI } from 'langchain/chat_models/openai'
 import {
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from 'langchain/prompts'
+
 
 import { ConversationChain } from 'langchain/chains'
 import { BufferMemory } from 'langchain/memory'
