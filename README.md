@@ -1,3 +1,4 @@
+
 # Tino P-Ai - A Chatbot powered by LangChain
 
 Tino P-Ai is a JavaScript/TypeScript-based project that uses the LangChain framework to create a simple chatbot with memory functionalities. It keeps the logic driving the chat in the backend (server folder) to avoid credentials being leaked to the user and simply passes the user message to the server through a client API and the other way around for the response from OpenAI. The utilization of LangChain makes it so it is modular and simple to change one LLM for another.
@@ -53,4 +54,4 @@ Tino P-Ai is a JavaScript/TypeScript-based project that uses the LangChain frame
 
 ## Usage
 
-Once you have the chatbot set up, you can use it to communicate with users and respond to their messages. The chatbot will use the LangChain framework and the OpenAI API to generate responses based on user input and contextual memory.
+Once you have the chatbot set up, you can use it to chat with. The chatbot will use the LangChain framework and the OpenAI API to generate responses based on user input and contextual memory.
