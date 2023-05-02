@@ -11,6 +11,7 @@ import { ConversationChain } from 'langchain/chains'
 import { BufferMemory } from 'langchain/memory'
 
 import * as dotenv from 'dotenv'
+import { ChainValues } from 'langchain/dist/schema'
 
 dotenv.config()
 
@@ -34,7 +35,7 @@ const chain = new ConversationChain({
   llm: chat,
 })
 
-async function chatAsync(message: string) {
+async function chatAsync(message: string): Promise<ChainValues> {
   const response = await chain.call({
     input: `${message}`,
   })

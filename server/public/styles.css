@@ -20,7 +20,7 @@ h2 {
 }
 
 .messagesContainer {
-  height: calc(100vh - 250px);
+  height: calc(90vh - 250px);
   overflow-y: scroll;
   border: 1px solid #651d10;
   padding: 1rem;

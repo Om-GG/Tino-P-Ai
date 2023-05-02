@@ -54,7 +54,7 @@ export default function Chat() {
           className="input is-danger is-medium"
           type="text"
           value={message}
-          placeholder="Ask me anything ..."
+          placeholder="Ask me anything..."
           onChange={(e) => setMessage(e.target.value)}
         ></input>
         <div className="">

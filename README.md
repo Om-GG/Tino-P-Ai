@@ -1,3 +1,4 @@
+![Alt text](./server/public/tino-p-ai.png?raw=true "Tino P-Ai")
 
 # Tino P-Ai - A Chatbot powered by LangChain
 
